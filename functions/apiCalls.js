@@ -1,7 +1,7 @@
-//const fetch = require(node-fetch);
+const fetch = require(node-fetch);
 
 exports.handler = async function(event){
-    const apiKey = "29fafbb65de324096de026a5b5b0416c";
+    const apiKey = process.env.MY_API_KEY;
     const type = params.type;//full call or half call
     try {
         let url;
