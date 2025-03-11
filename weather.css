@@ -1,0 +1,550 @@
+@font-face {
+    font-family: 'mont1';
+    src: url(fonts/Montserrat-Bold.ttf);
+}
+@font-face {
+    font-family: 'mont2';
+    src: url(fonts/Montserrat-Medium.ttf);
+}
+html, body{
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(to right, rgb(1, 1, 15), rgb(13, 26, 1));
+}
+/* spinners */
+.spinner{
+    width: 30px;
+    height: 30px;
+    border: 4px solid blueviolet;
+    border-radius: 50%;
+    border-top: 4px solid orange;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0% {transform:rotate(0deg); }
+    100% {transform: rotate(360deg);}
+}
+.spinner1{
+    width: 30px;
+    height: 30px;
+    border: 4px solid blueviolet;
+    border-radius: 50%;
+    border-top: 4px solid orange;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0% {transform:rotate(0deg); }
+    100% {transform: rotate(360deg);}
+}
+.spinner2{
+    width: 30px;
+    height: 30px;
+    border: 4px solid blueviolet;
+    border-radius: 50%;
+    border-top: 4px solid orange;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0% {transform:rotate(0deg); }
+    100% {transform: rotate(360deg);}
+}
+.spinner3{
+    width: 30px;
+    height: 30px;
+    border: 4px solid blueviolet;
+    border-radius: 50%;
+    border-top: 4px solid orange;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0% {transform:rotate(0deg); }
+    100% {transform: rotate(360deg);}
+}
+.spinner4{
+    width: 30px;
+    height: 30px;
+    border: 4px solid blueviolet;
+    border-radius: 50%;
+    border-top: 4px solid orange;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0% {transform:rotate(0deg); }
+    100% {transform: rotate(360deg);}
+}
+.spinner5{
+    width: 30px;
+    height: 30px;
+    border: 4px solid blueviolet;
+    border-radius: 50%;
+    border-top: 4px solid orange;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0% {transform:rotate(0deg); }
+    100% {transform: rotate(360deg);}
+}
+.spinner6{
+    width: 30px;
+    height: 30px;
+    border: 4px solid blueviolet;
+    border-radius: 50%;
+    border-top: 4px solid orange;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0% {transform:rotate(0deg); }
+    100% {transform: rotate(360deg);}
+}
+.spinner7{
+    width: 30px;
+    height: 30px;
+    border: 4px solid blueviolet;
+    border-radius: 50%;
+    border-top: 4px solid orange;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0% {transform:rotate(0deg); }
+    100% {transform: rotate(360deg);}
+}
+.NoDisplay{
+    display: none;
+}
+
+header{
+    margin-top: 10%;
+    margin-bottom: 15%;
+}
+.contain4HomeCheckBtn{
+    display: flex;
+    gap: 15px;
+    background-color:  rgb(1, 1, 15);
+    box-shadow: rgb(1, 1, 15) 0 2px 4px 4px;
+}
+.homeButton, .checkWeather{
+    background-color: blueviolet;
+    opacity: 85%;
+    color: aqua;
+    padding: 5px;
+    border: 2px solid rgb(66, 66, 2);
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: large;
+    font-weight: bold;
+    font-family: mont2;
+    cursor: pointer;
+}
+.homeButton:active, .checkWeather:active{
+    background-color: orange;
+    color: white;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+}
+.homeButton{
+    margin-left: 20px;
+}
+form{
+    display: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bolder;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    margin: 10px;
+}
+.welcomeTo{
+    color: rgb(217, 208, 226);
+    font-size: small;
+    font-weight: lighter;
+    font-family: mont2;
+}
+.weatherApp{
+    padding: 5px;
+    font-size: large;
+    font-family: mont1;
+    color: rgb(252, 252, 252);
+    opacity: 85%;
+    box-shadow: rgb(214, 214, 0) 0 0px 7px 2px;
+    border-radius: 10px;
+    background: linear-gradient(to right, blueviolet, orange);
+    border: none;
+
+}
+hr{
+border: 0px;
+box-shadow: rgb(214, 214, 0) 0 0px 7px 2px;
+}
+.tDi{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.temp{
+    color: white;
+}
+.iconAndTempContainer{
+    box-sizing: border-box;
+    display: flex;
+}
+.currentDateTime{
+    color: rgb(177, 194, 209);
+    font-family: mont2;
+}
+input{
+    opacity: 90%;
+    min-width: 70%;
+    min-height: 40px;
+    margin: 10px;
+    border-radius: 7px;
+    border: none;
+    padding-left: 15px;
+    font-size: large;
+    background: linear-gradient(to right, orange, blueviolet);
+   
+    color: rgb(0, 0, 0);
+}
+input::placeholder{
+    font-style: italic;
+    padding-left: 10px;
+    font-size: small;
+    color: rgb(0, 8, 8);
+}
+input:focus{
+    opacity: 100%;
+    box-shadow:rgb(214, 214, 0) 0 0px 7px 2px;
+    background-color: aqua;
+}
+.submitButton{
+    padding: 7px;
+    width: 40%;
+    border-radius: 10px;
+    background-color: blueviolet;
+    border: 2px solid white;
+    color: white;
+    font-weight: bolder;
+    font-size: 100%;
+    margin-top: 5%;
+    cursor: pointer;
+    font-family: mont1;
+}
+.submitButton:active{
+    background-color: orange;
+    border: none;
+}
+.submitButton:hover{
+    box-shadow: rgb(177, 177, 0) 0 0px 7px 2px;
+}
+.footer{
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    color: aliceblue;
+    opacity: 70%;
+}
+.infoDialog{
+    min-width: 80%;
+    min-height: 70%;
+    border-radius: 10px;
+    background: linear-gradient(to right, rgb(1, 1, 15), rgb(12, 8, 0));
+    color: aliceblue;
+    border: none;
+    opacity: 80%;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+}
+.infoDialog::backdrop{
+    background-color: #021727;
+    opacity: 80%;
+}
+.exitDialogContainer{
+    text-align: right;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+button.exitDialog{
+    background: transparent;
+    color: aliceblue;
+    border: none;
+    font-weight: bolder;
+    font-size: large;
+}
+button.exitDialog:active{
+    background-color: orange;
+    box-shadow: red 0 2px 3px 2px;
+    border-radius: 50%;
+    color: white;
+    padding: 10px;
+}
+span.aka{
+    font-size: small;
+    font-style: italic;
+}
+div.weatherConditioninDialog{
+    display: flex;
+    
+    align-items: center;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    justify-content: center;
+    border-radius: 10px;
+
+}
+div.stateInDialog, div.weatherConditioninDialog{
+    color: rgb(8, 248, 248);
+}
+div.infos{
+    max-width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+}
+div.imgTempInDialog{
+    display: flex;
+    gap: 10px;
+}
+div.mainDialogContainer{
+    font-family: sans-serif;
+    margin-top: 10%;
+}
+div.decriptionInDialog{
+    font-style: oblique;
+}
+
+div.resultDisplay{
+    border: 3px solid yellowgreen;
+}
+
+/*section for homepage*/
+.containerForDefaultWatherCondition{
+    box-shadow: rgb(1, 1, 15) 0 2px 4px 4px;
+    padding: 2%;
+    color: rgb(208, 207, 228);
+   font-family: mont2;
+}
+
+
+.hpCountryState{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-family: mont2;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.hpWeather{
+    align-items: center;
+    justify-content: space-evenly;
+    align-items: center;
+    font-family: mont2;
+    align-items: center;
+    margin-top: 7%;
+}
+.hpWeatherC1{
+    align-items: center;
+    box-shadow: rgb(66, 66, 2) 0 5px 7px 2px;
+    border-radius: 10px;
+    padding: 10px;
+    color: aqua;
+}
+.hpstate, .describeItems, .hpOverly, .hpAka {
+    opacity: 70%;
+}
+.akaImg{
+    display: flex;
+    align-items: center;
+    border: none;
+    text-align: center;
+    justify-content: space-evenly;
+    font-family: mont2;
+    border-radius: 20px;
+    box-shadow: rgb(66, 66, 2) 0 1px 7px 0px;
+}
+.hpDescribe{
+    font-style: italic;
+    color: aqua;
+    opacity: 70%;
+}
+.n8days{
+    display: flex;
+    border-radius: 10px;
+    overflow-x: auto;
+    width: 17rem;
+}
+sup{
+    color: white;
+    font-family: mont2;
+    font-size: large;
+}
+.weatherAppInNav{
+    display: none;
+}
+fieldset.onSmallScreen{
+    border-radius: 20px;
+    border-bottom: none;
+    border-top: none;
+}
+
+.hpWeatherC1NdhpDescribe{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+.fieldsetContainer{
+    margin-top: 7%;
+}
+select{
+    background: linear-gradient(to right, rgb(1, 1, 15), rgb(13, 26, 1));
+    color: aqua;
+    min-height: 60px;
+    text-align: center;
+    border-radius: 15px;
+    border-bottom: none;
+    border-top: 2px solid red;
+    font-family: mont1;
+}
+option{
+    background-color: black;
+    color: aqua;
+    border-radius: 20px;
+    font-family: mont1;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 2560px) {
+    
+    .contain4HomeCheckBtn{
+        justify-content: space-evenly;
+    }
+    .weatherAppInNav{
+        display: block;
+
+    }
+    header{
+        display: none;
+    }
+    .hpWeather{
+        display: flex;
+        align-items:center;
+        justify-content: space-evenly;
+        font-family: mont2;
+        margin-top: 7%;
+    }
+    .fieldsetContainer{
+        margin-top: 0;
+    }
+    /*scroll bar*/
+    .n8days::-webkit-scrollbar {
+        width: 5px;
+        height: 7px;
+        cursor: pointer;
+    }
+    
+    .n8days::-webkit-scrollbar-track {
+        background: #684504;
+        cursor: pointer;
+        box-shadow: rgb(66, 66, 2) 0 1px 7px 0px;
+    }
+    
+    .n8days::-webkit-scrollbar-thumb {
+        background: #000000;
+        border-radius: 10px;
+    }
+    
+    .n8days::-webkit-scrollbar-thumb:hover {
+        background: blueviolet;
+    }
+    .n8days {
+        scroll-behavior: smooth;
+    }
+    
+    
+    body, html{
+        height: 100%;
+    }
+    header{
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+    input{
+        opacity: 90%;
+        min-width: 40%;
+        min-height: 40px;
+        margin: 10px;
+        border-radius: 7px;
+        border: none;
+        padding-left: 15px;
+        font-size: large;
+    }
+    .submitButton{
+        padding: 7px;
+        width: 20%;
+        border-radius: 10px;
+        background-color: blueviolet;
+        border: 2px solid white;
+        color: white;
+        font-weight: bolder;
+        font-size: 120%;
+        margin-top: 2%;
+        cursor: pointer;
+  
+    }
+    form{
+        padding-top: 30px;
+        padding-bottom: 50px;
+    }
+    img.weatherIcon{
+        width: 150px;
+    }
+    h1.weatherMain{
+        font-size: xx-large;
+    }
+    sup.tempSup{
+        font-size: larger;
+    }
+    div.infos{
+        max-width: 80%;
+        justify-content: space-evenly;
+    }
+}
+
+/*loader side*/
+.loader{
+    display: none;
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    top: 40%;
+    bottom: 50%;
+    transform: translate(-50%, -50%);
+}
+.loader::after{
+    margin-top: 50px;
+    content: "";
+    width: 60px;
+    height: 30px;
+    border: 10px solid #fff;
+    border-top: 3px solid #ff9800;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
