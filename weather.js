@@ -85,13 +85,13 @@ async function getLonLat(country, state, city, timestamp){
         let stateConfirm;
 
         if (!city){
-            let response = await fetch(`/.netlify/functions/apiCalls?type=halfCall&state=${state}&country=${country}`);
+            let response = await fetch(`/.functions/apiCalls?type=halfCall&state=${state}&country=${country}`);
             responsed = response;
         }
         else{
 
             responsed = response;
-            let response = await fetch(`/.netlify/functions/apiCalls?type=fullCall&city=${city}&state=${state}&country=${country}`);
+            let response = await fetch(`/.functions/apiCalls?type=fullCall&city=${city}&state=${state}&country=${country}`);
             responsed = response;
         }
         let data = await responsed.json();
@@ -115,10 +115,10 @@ async function foreCast(lat, lon, timestamp, id, fullName, stateConfirm, country
     try {
         //a GET API request to get weather condition
         
-        let response = await fetch(`/.netlify/functions/apiCalls?type=viaTimestamp&lat=${lat}&lon=${lon}&timestamp=${timestamp}`);//weather condition via timestamp
+        let response = await fetch(`/.functions/apiCalls?type=viaTimestamp&lat=${lat}&lon=${lon}&timestamp=${timestamp}`);//weather condition via timestamp
 
-        let response2 = await fetch(`/.netlify/functions/apiCalls?type=reverse&lat=${lat}&lon=${lon}`);//geocoding to get name of country via cordinates
-        let response3 = await fetch(`/.netlify/functions/apiCalls?type=oneCall&lat=${lat}&lon=${lon}`);//to get the next 8 days weather condition
+        let response2 = await fetch(`/.functions/apiCalls?type=reverse&lat=${lat}&lon=${lon}`);//geocoding to get name of country via cordinates
+        let response3 = await fetch(`/.functions/apiCalls?type=oneCall&lat=${lat}&lon=${lon}`);//to get the next 8 days weather condition
 
         let JsonData = await response.json(); //conversion of response to json (current weather condition using timemstamp)
         let JsonData2 = await response2.json();//conversion of geocoding response2 to json to get the state
