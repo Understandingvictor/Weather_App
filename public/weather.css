@@ -10,7 +10,7 @@ html, body{
     height: 100%;
     padding: 0;
     margin: 0;
-    background: linear-gradient(to right, rgb(1, 1, 15), rgb(13, 26, 1));
+    background: linear-gradient(to right, rgb(1, 1, 15), rgb(0, 0, 0));
 }
 /* spinners */
 .spinner{
@@ -207,6 +207,7 @@ box-shadow: rgb(214, 214, 0) 0 0px 7px 2px;
 .currentDateTime{
     color: rgb(177, 194, 209);
     font-family: mont2;
+    font-size: small;
 }
 input{
     opacity: 90%;
@@ -363,7 +364,7 @@ div.resultDisplay{
     padding: 10px;
     color: aqua;
 }
-.hpstate, .describeItems, .hpOverly, .hpAka {
+.hpstate, .hpstateLat, .describeItems, .hpOverly, .hpAka, legend, .currentDateTime, .stateInDialogSpecific, .akaSpecific, .decriptionInDialog {
     opacity: 70%;
 }
 .akaImg{
@@ -427,7 +428,11 @@ option{
 }
 
 @media only screen and (min-width: 768px) and (max-width: 2560px) {
-    
+
+
+    .cen{
+        margin-top: 7%;
+    }
     .contain4HomeCheckBtn{
         justify-content: space-evenly;
     }

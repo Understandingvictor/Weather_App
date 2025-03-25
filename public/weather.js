@@ -85,26 +85,42 @@ async function getLonLat(country, state, city, timestamp){
         let stateConfirm;
 
         if (!city){
-            let response = await fetch(`/.functions/apiCalls?type=halfCall&state=${state}&country=${country}`);
+            let response = await fetch(`/.netlify/functions/apiCalls`, {
+                method:'POST',
+                body:JSON.stringify({
+                    country:country, 
+                    state:state,
+                    type:'halfCall'
+                })
+            });
             responsed = response;
         }
         else{
-
-            responsed = response;
-            let response = await fetch(`/.functions/apiCalls?type=fullCall&city=${city}&state=${state}&country=${country}`);
+            //responsed = response; ?type=fullCall&city=${city}&state=${state}&country=${country}`
+            let response = await fetch('/.netlify/functions/apiCalls', {
+                method:'POST',
+                body:JSON.stringify({country:country, state:state, city:city, timestamp:timestamp, type:'fullCall'})
+            });
             responsed = response;
         }
+        //.................................
         let data = await responsed.json();
-        if (data.length === 0){
+        //data = JSON.stringify(data);
+
+        if (!data || data.length === 0){
             document.querySelector('.dialogErrors').textContent = `no info for ${city} place`;
             return;
         }
-        latitude = data[0].lat; //latitude
-        longitude = data[0].lon;    //longitude
-        fullName = data[0].name;    //full name of the city
-        stateConfirm = data[0].state;   //the state confirmation
 
-        foreCast(latitude, longitude, timestamp, id = "getLonLat", fullName, stateConfirm, country);//getting wether condition as per cordinates
+        latitude = data.data[0].lat; //latitude
+        longitude = data.data[0].lon;    //longitude
+        fullName = data.data[0].name;    //full name of the city
+        stateConfirm = data.data[0].state;   //the state confirmation
+
+        //console.log(data);
+        console.log(latitude, longitude, fullName, stateConfirm);
+        //console.log(data);
+       foreCast(latitude, longitude, timestamp, id = "getLonLat", fullName, stateConfirm, country);//getting wether condition as per cordinates
     } catch (error) {
         document.querySelector('.dialogErrors').textContent = error.message;
     }
@@ -113,58 +129,71 @@ async function getLonLat(country, state, city, timestamp){
 //fetching weather info based on user input: country, state, city and time and date.
 async function foreCast(lat, lon, timestamp, id, fullName, stateConfirm, country){
     try {
-        //a GET API request to get weather condition
-        
-        let response = await fetch(`/.functions/apiCalls?type=viaTimestamp&lat=${lat}&lon=${lon}&timestamp=${timestamp}`);//weather condition via timestamp
 
-        let response2 = await fetch(`/.functions/apiCalls?type=reverse&lat=${lat}&lon=${lon}`);//geocoding to get name of country via cordinates
-        let response3 = await fetch(`/.functions/apiCalls?type=oneCall&lat=${lat}&lon=${lon}`);//to get the next 8 days weather condition
+
+        if (id === "getLonLat"){ //function for form
+
+            //a GET API request to get weather condition
+        let response = await fetch('/.netlify/functions/apiCalls', {
+            method:'POST',
+            body:JSON.stringify({lat:lat, lon:lon, timestamp:timestamp, type:'viaTimestamp'})
+        });//weather condition via timestamp
 
         let JsonData = await response.json(); //conversion of response to json (current weather condition using timemstamp)
-        let JsonData2 = await response2.json();//conversion of geocoding response2 to json to get the state
-        let JsonData3 = await response3.json();// conversion of response with aim for next 8 days
+        let temperature = JsonData.data.data[0].temp; 
+        let feelsLike = JsonData.data.data[0].feels_like;
+        let weatherMain = JsonData.data.data[0].weather[0].main; //what weather is
+        let weatherMainDesc = JsonData.data.data[0].weather[0].description; //description
+        let weatherMainIcon = JsonData.data.data[0].weather[0].icon; //weather icon
+        let feelsLikeTempCelscius = (feelsLike - 273.15).toFixed(2); //converting kelvin temperature to degree celcius
+        let currentTempCelscius = (temperature - 273.15).toFixed(2); //converting kelvin temperature to degree celcius
+        const iconUrl = `https://openweathermap.org/img/wn/${weatherMainIcon}@2x.png`;//open weather map url for icon
+
+            document.querySelector('.spinner7').classList.add('NoDisplay');
+            document.querySelector('.tempSup').textContent = `${currentTempCelscius }`;
+            document.querySelector('.countryInDialogspecific').textContent = country;
+            document.querySelector('.akaSpecific').textContent = fullName;
+            document.querySelector('.stateInDialogSpecific').textContent = stateConfirm;
+            document.querySelector('.weatherIcon').src = iconUrl;
+            document.querySelector('.weatherMain').textContent = `${weatherMain}`;
+            document.querySelector('.describe').textContent = `${weatherMainDesc}`;
+            document.querySelector('.feels').textContent = `the temperature feels like ${feelsLikeTempCelscius}`;
+           
+        }
         
-        let sunrise = JsonData.data[0].sunrise;
-        let sunset = JsonData.data[0].sunset;
-        const sunriseReadable = (new Date(sunrise * 1000)).toLocaleTimeString();
-        const sunsetReadable = (new Date(sunset * 1000)).toLocaleTimeString();
+        if (id === "UCADCW"){
+                let response2 = await fetch('/.netlify/functions/apiCalls',  {
+                method:'POST',
+                body:JSON.stringify({lat:lat, lon:lon, type:'reverse'})
+            });//geocoding to get name of country via cordinates
 
-        let currentData = JsonData.data[0];//getting the object and extracting the first element of the object
-        const iconUrl = `https://openweathermap.org/img/wn/${currentData.weather[0].icon}@2x.png`;//open weather map url for icon
-        container4next8DaysWeather = document.querySelector('.n8days');//grabbing of the containers which holds the 8days weather condition
-        let NextFourdays = JsonData3.daily;//grabbing the next 8 days timestamp from response
+            let response3 = await fetch('/.netlify/functions/apiCalls',  {
+                method:'POST',
+                body:JSON.stringify({lat:lat, lon:lon, type:'oneCall'})
+            });//to get the next 8 days weather condition and current weather condition
 
-        //converting each timestamp to corresponding readable format, getting temperature and icon for each day. and then dynamically populating in the frontend
-        NextFourdays.forEach(element => {
-            let timestamp = element.dt;
-            let temperature = element.temp.day;
-            let icon = element.weather[0].icon;
-            const currentDate = (new Date(timestamp * 1000)).toLocaleDateString("en-uS", {weekday:"short"});
-            temperature = (temperature - 273.15).toFixed(2);
-            const newDiv = document.createElement("div");
-            const img = document.createElement("img");
-            const sup = document.createElement("sup"); 
-            const date = document.createElement("small");
-            img.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;//open weather url for icon
-            img.width = "100";
-            sup.textContent = temperature;
-            date.textContent = currentDate;
+            let JsonData2 = await response2.json();//conversion of geocoding response2 to json to get the state
+            let JsonData3 = await response3.json();// conversion of response with aim for next 8 days and current weather condition
 
-            newDiv.appendChild(img);
-            newDiv.appendChild(sup);
-            newDiv.appendChild(date);
-            container4next8DaysWeather.appendChild(newDiv);
-        });
-       
-        let currentData2 = JsonData2[0];
-        let countryName = currentData2.country;
+            //console.log(JsonData2);
+            console.log("......................................")
+            console.log(JsonData3.data.daily);
 
-        let currentTempCelscius = (currentData.temp - 273.15).toFixed(2); //converting kelvin temperature to degree celcius
-        let currentFeelLikeTempCelscius = (currentData.feels_like - 273.15).toFixed(2);//converting kelvin temperature to degree celcius
-        let currentTime = new Date(currentData.dt * 1000).toLocaleTimeString(); //converting unix timestamp to current time
-        let currentDate = new Date(currentData.dt * 1000).toLocaleDateString(); //converting unix timestamp to current date
+            let currentWeatherIcon = JsonData3.data.current.weather[0].icon;
+            const iconUrl = `https://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`;//open weather map url for icon
+            let countryName = JsonData3.data.timezone;
+            let currentTempCelcius = (JsonData3.data.current.temp - 273.15).toFixed(2); //converting kelvin temperature to degree celcius
+            let weatherMain = JsonData3.data.current.weather[0].main;
+            let weatherDesc = JsonData3.data.current.weather[0].description;
+            let humidity = JsonData3.data.current.humidity;
 
-         if (id === "UCADCW"){
+            let sunrise = JsonData3.data.current.sunrise;
+            let sunset = JsonData3.data.current.sunset;
+
+            const sunriseReadable = (new Date(sunrise * 1000)).toLocaleTimeString();
+            const sunsetReadable = (new Date(sunset * 1000)).toLocaleTimeString();
+            //let feelsLikeTempCelcius = (JsonData3.data.current.feels_like - 273.15).toFixed(2); //converting kelvin temperature to degree celcius
+
             document.querySelector('.spinner').classList.add('NoDisplay');
             document.querySelector('.spinner2').classList.add('NoDisplay');
             document.querySelector('.spinner3').classList.add('NoDisplay');
@@ -175,25 +204,37 @@ async function foreCast(lat, lon, timestamp, id, fullName, stateConfirm, country
             document.querySelector('.hpstate').textContent = `longitude: ${lon.toFixed(3)}`;
             document.querySelector('.hpstateLat').textContent = `latitude: ${lat.toFixed(3)}`;
             document.querySelector('.conditionIcon').src = iconUrl;
-            document.querySelector('.hptemp').textContent = currentTempCelscius;
-            document.querySelector('.weatherRsolve').textContent =  `${currentData.weather[0].main}`;
-            document.querySelector('.hpOverly').textContent = `${currentData.weather[0].description}`;
+            document.querySelector('.hptemp').textContent = currentTempCelcius;
+            document.querySelector('.weatherRsolve').textContent =  weatherMain;
+            document.querySelector('.hpOverly').textContent = weatherDesc;
             document.querySelector('.sunrise').textContent = `sunrise: ${sunriseReadable}`;
             document.querySelector('.sunset').textContent = `sunset: ${sunsetReadable}`;
-            document.querySelector('.humidity').textContent = `humidity: ${currentData.humidity}`;
-        }
+            document.querySelector('.humidity').textContent = `humidity: ${humidity}`;
 
-         if (id === "getLonLat"){ //function for form
-            document.querySelector('.spinner7').classList.add('NoDisplay');
-            document.querySelector('.tempSup').textContent = `${currentTempCelscius}`;
-            document.querySelector('.countryInDialogspecific').textContent = country;
-            document.querySelector('.akaSpecific').textContent = fullName;
-            document.querySelector('.stateInDialogSpecific').textContent = stateConfirm;
-            document.querySelector('.weatherIcon').src = iconUrl;
-            document.querySelector('.weatherMain').textContent = `${currentData.weather[0].main}`;
-            document.querySelector('.describe').textContent = `${currentData.weather[0].description}`;
-            document.querySelector('.feels').textContent = `the temperature feels like ${currentFeelLikeTempCelscius}`;
-            
+            container4next8DaysWeather = document.querySelector('.n8days');//grabbing of the containers which holds the 8days weather condition
+            let NextFourdays = JsonData3.data.daily;//grabbing the next 8 days timestamp from response
+            //converting each timestamp to corresponding readable format, getting temperature and icon for each day. and then dynamically populating in the frontend
+            NextFourdays.forEach(element => {
+                let timestamp = element.dt;
+                let temperature = element.temp.day;
+                let icon = element.weather[0].icon;
+                const currentDate = (new Date(timestamp * 1000)).toLocaleDateString("en-uS", {weekday:"short"});
+                temperature = (temperature - 273.15).toFixed(2);
+                const newDiv = document.createElement("div");
+                const img = document.createElement("img");
+                const sup = document.createElement("sup"); 
+                const date = document.createElement("small");
+                img.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;//open weather url for icon
+                img.width = "100";
+                sup.textContent = temperature;
+                date.textContent = currentDate;
+
+                newDiv.appendChild(img);
+                newDiv.appendChild(sup);
+                newDiv.appendChild(date);
+                container4next8DaysWeather.appendChild(newDiv);
+            });
+            container4next8DaysWeather.style.opacity = "70" + "%";
         }
            } catch (error) {
             document.querySelector('.dialogErrors').textContent = error.message;
